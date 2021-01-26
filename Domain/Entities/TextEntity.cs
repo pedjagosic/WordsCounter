@@ -5,7 +5,7 @@ namespace Domain.Entities
 {
     public class TextEntity
     {
-        private static readonly string[] ValuesToReplaceInText = new[] { ".", ",", "?", "!", ":" };
+        private static readonly string[] ValuesToReplaceInText = { ".", ",", "?", "!", ":" };
         private const string WordsSeparator = " ";
 
         public string Id { get; private set; }
@@ -24,7 +24,7 @@ namespace Domain.Entities
 
             foreach (var value in ValuesToReplaceInText)
             {
-                text = text.Replace(value, WordsSeparator);
+                text = text.Replace(value, string.Empty);
             }
 
             var words = text.Trim().Split(WordsSeparator);

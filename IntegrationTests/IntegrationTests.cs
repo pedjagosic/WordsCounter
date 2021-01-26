@@ -22,7 +22,7 @@ namespace IntegrationTests
         [Test]
         public async Task AddTextIntoDb()
         {
-            var textEntity = new TextEntity("");
+            var textEntity = new TextEntity("This is simple text.");
 
             var result = await _store.AddAsync(textEntity);
             Assert.IsTrue(result == 1);
