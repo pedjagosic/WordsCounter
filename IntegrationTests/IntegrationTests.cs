@@ -1,9 +1,11 @@
+using System.Linq;
 using Application.Stores;
 using Domain.Entities;
 using Infrastructure.Persistence;
 using Infrastructure.Stores;
 using NUnit.Framework;
 using System.Threading.Tasks;
+using Infrastructure.TypeConverters;
 
 namespace IntegrationTests
 {
@@ -14,7 +16,7 @@ namespace IntegrationTests
         [OneTimeSetUp]
         public void OneTimeSetup()
         {
-            _store = new TextStore(new TextDbContext());
+            _store = new TextStore(new TextDbContext(), new TextEntityToTextDtoConverter());
         }
 
         [Test]
@@ -24,6 +26,14 @@ namespace IntegrationTests
 
             var result = await _store.AddAsync(textEntity);
             Assert.IsTrue(result == 1);
+        }
+
+        [Test]
+        public async Task GetTextsFromDb()
+        {
+            await _store.AddAsync(new TextEntity("Simple text."));
+            var result = await _store.GetAllAsync();
+            Assert.IsTrue(result.Any());
         }
 
         // [TearDown]

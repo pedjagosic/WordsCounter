@@ -1,10 +1,9 @@
-﻿using Application.Common;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence
 {
-    public class TextDbContext : DbContext, ITextDbContext
+    public class TextDbContext : DbContext
     {
         private static readonly string SqlConnectionString =
             $"Server=(localdb)\\mssqllocaldb;Database=TextDb;Trusted_Connection=True;MultipleActiveResultSets=true;";

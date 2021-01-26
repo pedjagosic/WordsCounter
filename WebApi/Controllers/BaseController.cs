@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public abstract class BaseController : ControllerBase
     {

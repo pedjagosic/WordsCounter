@@ -8,6 +8,7 @@ namespace Application.Text.Commands
         {
             RuleFor(t => t.Text).NotNull();
             RuleFor(t => t.Text).NotEmpty();
+            RuleFor(t => t.Text).Length(1, 2500);
         }
     }
 }

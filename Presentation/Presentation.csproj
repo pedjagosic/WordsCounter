@@ -7,17 +7,29 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.11" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.11" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Files\test.txt" />
-    <EmbeddedResource Include="Files\test.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Files\text with1557words.txt" />
+    <None Remove="Files\text with 155 words.txt" />
+    <EmbeddedResource Include="Files\text with 155 words.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <None Remove="Files\text with 4 words.txt" />
+    <EmbeddedResource Include="Files\text with 4 words.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
 

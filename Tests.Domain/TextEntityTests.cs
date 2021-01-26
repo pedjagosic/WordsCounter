@@ -9,7 +9,7 @@ namespace Tests.Domain
         [Test]
         public void SimpleTextEntityTest()
         {
-            var text = "This is simple text with 7 words.";
+            const string text = "This is simple text with 7 words.";
             
             var textEntity = new TextEntity(text);
             
@@ -19,7 +19,7 @@ namespace Tests.Domain
         [Test]
         public void EmptyTextTest()
         {
-            var text = "";
+            const string text = "";
             
             var textEntity = new TextEntity(text);
             

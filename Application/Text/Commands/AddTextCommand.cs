@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using System;
+using Domain.Entities;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace Application.Text.Commands
 
         public AddTextCommand(string text)
         {
-            this.Text = text;
+            Text = text;
         }
 
         public class AddTextCommandHandler : IRequestHandler<AddTextCommand, int>
@@ -28,13 +29,17 @@ namespace Application.Text.Commands
             {
                 try
                 {
+                    var validator = new AddTextCommandValidator();
+                    var validationResult = await validator.ValidateAsync(request, cancellationToken);
+                    if (!validationResult.IsValid) throw new Exception();
+                    
                     var textEntity = new TextEntity(request.Text);
                     var result = await _store.AddAsync(textEntity);
                     return result;
                 }
-                catch (System.Exception)
+                catch (Exception)
                 {
-                    throw;
+                    throw new Exception();
                 }
             }
         }

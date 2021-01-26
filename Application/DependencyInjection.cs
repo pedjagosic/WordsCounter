@@ -1,8 +1,7 @@
-﻿using Application.Common;
-using Application.Stores;
+﻿using System.Collections.Generic;
+using Application.Dto;
 using Application.Text.Commands;
 using Application.Text.Queries;
-using Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,6 +16,9 @@ namespace Application
             
             serviceCollection
                 .AddScoped<IRequestHandler<AddTextCommand, int>, AddTextCommand.AddTextCommandHandler>();
+
+            serviceCollection
+                .AddScoped<IRequestHandler<GetAllTextsQuery, IEnumerable<TextDto>>, GetAllTextsQuery.GetAllTextsQueryHandler>();
 
             return serviceCollection;
         }

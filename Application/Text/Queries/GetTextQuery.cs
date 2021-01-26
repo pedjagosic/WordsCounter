@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using Application.Common;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
+﻿using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Extensions;
@@ -36,8 +33,8 @@ namespace Application.Text.Queries
             {
                 if (request.SelectedTextType.Id != TextType.TextCountFromDb.Id)
                     return request.Text.GetCountOfWordsFromText();
-                
-                var book = await _store.FindByIdAsync(new GetTextQuery(request.Id));
+
+                var book = await _store.FindByIdAsync(request);
                 return book.GetCountOfWordsFromText();
 
             }
