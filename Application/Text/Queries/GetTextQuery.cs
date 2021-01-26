@@ -35,7 +35,7 @@ namespace Application.Text.Queries
                     return request.Text.GetCountOfWordsFromText();
 
                 var book = await _store.FindByIdAsync(request);
-                return book.GetCountOfWordsFromText();
+                return book.Text.GetCountOfWordsFromText();
 
             }
         }

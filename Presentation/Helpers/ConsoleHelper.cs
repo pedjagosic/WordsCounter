@@ -27,7 +27,7 @@ namespace Presentation.Helpers
                 RunAsync(selectedTypeId, result).GetAwaiter().GetResult();
             }
         }
-
+        
         private static string GetSelectedTypeId()
         {
             var isValidType = false;
@@ -55,18 +55,17 @@ namespace Presentation.Helpers
 
             if (selectedTypeId == TextType.TextCountFromDb.Id)
                 result = GetTextId();
+            
             return result;
         }
 
         private static string GetTextId()
-        {
-            return PrintAllTextsFromDbAndGetSingleIdAsync().GetAwaiter().GetResult();
-        }
-
+         => PrintAllTextsFromDbAndGetSingleIdAsync().GetAwaiter().GetResult();
+        
         private static async Task<string> PrintAllTextsFromDbAndGetSingleIdAsync()
         {
             var texts = await GetAllTextsFromDbAsync();
-            Console.WriteLine($"Select text from db: 1-{texts.Count}");
+            Console.WriteLine($"Select text from db (1-{texts.Count}):");
             var indexes = new string[texts.Count];
             for (var i = 0; i < texts.Count; i++)
             {
@@ -80,7 +79,7 @@ namespace Presentation.Helpers
                 index = Console.ReadLine();
             }
 
-            return texts[int.Parse(index ?? "1") - 1].Id;
+            return texts[int.Parse(index) - 1].Id;
         }
 
         private static string GetTextFromFile()
@@ -88,29 +87,21 @@ namespace Presentation.Helpers
             var files = PrintListOfFiles();
             var indexes = GetIndexes(files);
 
-            var fileExist = false;
-            var filePath = string.Empty;
+            var fileContent = string.Empty;
 
-            while (!fileExist)
+            var option = string.Empty;
+            while (!indexes.Contains(option))
             {
-                Console.WriteLine($"Select file: 1-{files.Count()}");
-                var option = Console.ReadLine();
-                var index = -1;
-                try
-                {
-                    if (!indexes.Contains(option)) GetTextFromFile();
-                    index = int.Parse(option);
-                }
-                catch (Exception)
-                {
-                    GetTextFromFile();
-                }
-
-                filePath = files[index - 1];
-                fileExist = File.Exists(filePath);
+                option = Console.ReadLine();
             }
-
-            var fileContent = File.ReadAllText(filePath);
+            var index = int.Parse(option);
+            
+            var filePath = files[index - 1];
+            using var sr = File.OpenText(filePath);
+            while (sr.ReadLine() != null)
+            {
+                fileContent = File.ReadAllText(filePath);
+            }
 
             return fileContent;
         }
@@ -129,8 +120,8 @@ namespace Presentation.Helpers
         private static string[] PrintListOfFiles()
         {
             var files = Directory.GetFiles(FilesDirectoryPath);
-            Console.WriteLine("List of files:");
-            for (var i = 0; i < files.Count(); i++)
+            Console.WriteLine($"List of files (1-{files.Length}):");
+            for (int i = 0; i < files.Length; i++)
             {
                 Console.WriteLine($"{i + 1}. {Path.GetFileName(files[i])}");
             }
@@ -167,7 +158,7 @@ namespace Presentation.Helpers
             var allTextsFromDb = JsonConvert.DeserializeObject<List<TextDto>>(allTextsFromDbJson);
             return allTextsFromDb;
         }
-
+        
         private static void PrintTypes()
         {
             Console.WriteLine($"1. {TextType.TextCountFromFile.DisplayText}");

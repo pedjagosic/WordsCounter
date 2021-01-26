@@ -1,3 +1,4 @@
+using Application.Extensions;
 using Domain.Entities;
 using NUnit.Framework;
 
@@ -13,7 +14,7 @@ namespace Tests.Domain
             
             var textEntity = new TextEntity(text);
             
-            Assert.IsTrue(textEntity.GetCountOfWordsFromText() == 7);
+            Assert.IsTrue(textEntity.Text.GetCountOfWordsFromText() == 7);
         }
         
         [Test]
@@ -23,7 +24,7 @@ namespace Tests.Domain
             
             var textEntity = new TextEntity(text);
             
-            Assert.IsTrue(textEntity.GetCountOfWordsFromText() == 0);
+            Assert.IsTrue(textEntity.Text.GetCountOfWordsFromText() == 0);
         }
     }
 }
